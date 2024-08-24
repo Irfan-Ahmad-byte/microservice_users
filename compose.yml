@@ -1,26 +1,37 @@
-version: '3.9'
 
 services:
-  db:
-    image: postgresql:latest
+  postgresql-server:
+    image: bitnami/postgresql:latest
     volumes:
       - postgres_data:/var/lib/postgresql/data
     environment:
-      POSTGRES_USER: myuser
-      POSTGRES_PASSWORD: mypassword
-      POSTGRES_DB: mydb
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: mysupersecretpassword
+      POSTGRES_DB: authentication
+    networks:
+      - microservice-net
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "postgres"]
+      interval: 10s
+      timeout: 30s
+      retries: 5
 
-  web:
-    build: .
-    command: uvicorn app.main:app --host 0.0.0.0 --port 8000
-    volumes:
-      - .:/app
-    ports:
-      - "8000:8000"
-    environment:
-      DATABASE_URL: postgresql://myuser:mypassword@db/mydb
+  authentication-app:
+    build:
+      context: .
+      dockerfile: Dockerfile
     depends_on:
-      - db
+      postgresql-server:
+        condition: service_healthy
+    networks:
+      - microservice-net
+    ports:
+      - 8000:8000
 
 volumes:
   postgres_data:
+
+
+networks:
+  microservice-net:
+    driver: bridge

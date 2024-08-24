@@ -1,8 +1,8 @@
 from fastapi import FastAPI, Depends
 from fastapi.middleware.cors import CORSMiddleware
-from config.config import Config
-from routers import users
-from dependencies import security
+from app.config.config import Config
+from app.routers import users
+from app.dependencies import security
 
 
 app = FastAPI()

@@ -1,1 +1,1 @@
-from migrations.users import User
+from app.migrations.users import User

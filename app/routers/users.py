@@ -1,9 +1,9 @@
 from fastapi import Depends, FastAPI, HTTPException
 from sqlalchemy.orm import Session
-from executors import crud
-from schemas import schemas
-from migrations import users
-from migrations.database import SessionLocal, engine
+from app.executors import crud
+from app.schemas import schemas
+from app.migrations import users
+from app.migrations.database import SessionLocal, engine
 from fastapi import APIRouter
 from fastapi.responses import JSONResponse, PlainTextResponse
 import os
