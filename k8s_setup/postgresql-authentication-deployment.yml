@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: postgresql-authentication
+  namespace: orchestrator
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: postgresql-authentication
+  template:
+    metadata:
+      labels:
+        app: postgresql-authentication
+    spec:
+      containers:
+      - name: postgresql-authentication
+        image: bitnami/postgresql:latest
+        env:
+        - name: POSTGRES_USER
+          value: "postgres"
+        - name: POSTGRES_PASSWORD
+          value: "mysupersecretpassword"
+        - name: POSTGRES_DB
+          value: "authentication"
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+        ports:
+        - containerPort: 5432
+        volumeMounts:
+        - mountPath: /var/lib/postgresql/data
+          name: postgres-authentication-data
+      volumes:
+      - name: postgresql-authentication
+        persistentVolumeClaim:
+          claimName: postgresql-authentication-pvc

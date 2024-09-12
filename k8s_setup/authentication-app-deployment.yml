@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: authentication-app
+  namespace: orchestrator
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: authentication-app
+  template:
+    metadata:
+      labels:
+        app: authentication-app
+    spec:
+      containers:
+      - name: authentication-app
+        image: authentication-app:latest
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+        ports:
+        - containerPort: 8080
+      env:
+      - name: DATABASE_URL
+        value: "postgresql://postgres:mysupersecretpassword@postgresql-authentication-service:5432/authentication"
