@@ -16,23 +16,19 @@ spec:
       containers:
       - name: postgresql-authentication
         image: bitnami/postgresql:latest
-        env:
-        - name: POSTGRES_USER
-          value: "postgres"
-        - name: POSTGRES_PASSWORD
-          value: "mysupersecretpassword"
-        - name: POSTGRES_DB
-          value: "authentication"
         resources:
           limits:
             memory: "128Mi"
             cpu: "500m"
+        envFrom:
+        - configMapRef:
+            name: auth-config
         ports:
         - containerPort: 5432
         volumeMounts:
         - mountPath: /var/lib/postgresql/data
-          name: postgres-authentication-data
+          name: postgresql-authentication-pvc
       volumes:
-      - name: postgresql-authentication
+      - name: postgresql-authentication-pvc
         persistentVolumeClaim:
           claimName: postgresql-authentication-pvc

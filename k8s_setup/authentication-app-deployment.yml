@@ -20,8 +20,8 @@ spec:
           limits:
             memory: "128Mi"
             cpu: "500m"
+        envFrom:
+        - configMapRef:
+            name: auth-config
         ports:
         - containerPort: 8080
-      env:
-      - name: DATABASE_URL
-        value: "postgresql://postgres:mysupersecretpassword@postgresql-authentication-service:5432/authentication"
