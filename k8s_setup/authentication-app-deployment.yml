@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
       - name: authentication-app
-        image: authentication-app:latest
+        image: authentication-app-api:new
         resources:
           limits:
             memory: "128Mi"

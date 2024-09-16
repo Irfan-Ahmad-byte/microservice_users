@@ -1,10 +1,17 @@
 #!/bin/bash
 
-docker build -t authentication-app:latest .
+# docker build -t notifications-app:latest .
 
-minikube image load authentication-app:latest
+# check if minikube is running or not, if not then start minikube
+minikube status | grep -q 'Running' || minikube start
+
+minikube image build -t authentication-app-api:new .
+
+kubectl config use-context minikube
 
 kubectl apply -f k8s_setup/namespace.yml
+
+kubectl apply -f k8s_setup/authentication-secrets.yml
 
 kubectl apply -f k8s_setup/postgres-authentication-pvc.yml
 kubectl apply -f k8s_setup/postgresql-authentication-deployment.yml
@@ -12,3 +19,5 @@ kubectl apply -f k8s_setup/postgresql-authentication-service.yml
 
 kubectl apply -f k8s_setup/authentication-app-deployment.yml
 kubectl apply -f k8s_setup/authentication-app-service.yml
+
+kubectl port-forward service/authentication-app-service 8080:8080 -n orchestrator
