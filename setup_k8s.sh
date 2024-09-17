@@ -20,4 +20,7 @@ kubectl apply -f k8s_setup/postgresql-authentication-service.yml
 kubectl apply -f k8s_setup/authentication-app-deployment.yml
 kubectl apply -f k8s_setup/authentication-app-service.yml
 
+# sleep for 1 minute to let the pods start
+sleep 1m
+
 kubectl port-forward service/authentication-app-service 8080:8080 -n orchestrator
