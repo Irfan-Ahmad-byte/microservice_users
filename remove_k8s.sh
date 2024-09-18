@@ -1,5 +1,7 @@
 #!/bin/bash
 
+killall kubectl
+
 kubectl delete deployments --all -n orchestrator
 kubectl delete services --all -n orchestrator
 kubectl delete pvc --all -n orchestrator
