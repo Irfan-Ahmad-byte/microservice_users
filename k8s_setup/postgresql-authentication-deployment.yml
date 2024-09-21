@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: postgresql-authentication
-  namespace: orchestrator
+  namespace: authentication-app
 spec:
   replicas: 1
   selector:
