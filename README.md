@@ -20,3 +20,17 @@ Execute the `run.sh` script.
 ## Run through Docker Compose
 
 `docker compose up` or `docker compose up -d`
+
+
+
+## Github secrets
+
+Add following secrets to your github actions, or you can manage them as you wish:
+
+- DATABASE_URL
+- DOCKERHUB_REPO
+- DOCKERHUB_TOKEN
+- DOCKERHUB_USERNAME
+- POSTGRES_DB
+- POSTGRES_PASSWORD
+- POSTGRES_USER
