@@ -1,0 +1,13 @@
+# define load balancer rules for our servce
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: authentication-load-balancer-service
+spec:
+  selector:
+    app: authentication-load-balancer-service
+  ports:
+  - port: 80
+    targetPort: 8080
+  type: LoadBalancer
